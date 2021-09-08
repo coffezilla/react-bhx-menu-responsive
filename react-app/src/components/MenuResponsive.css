@@ -1,0 +1,60 @@
+/*
+$mobile-m:      "only screen and (max-width: 400px)";
+$mobile:        "only screen and (min-width: 401px) and (max-width: 529px)";
+$tablet-m:      "only screen and (min-width: 530px) and (max-width: 700px)";
+$tablet:        "only screen and (min-width: 701px) and (max-width: 949px)";
+$desktop:       "only screen and (min-width: 950px) and (max-width: 1128px)";
+$desktop-m:     "only screen and (min-width: 1129px) and (max-width: 1175px)";
+$desktop-xl:    "only screen and (min-width: 1176px) and (max-width: 1299px)";
+$desktop-xll:   "only screen and (min-width: 1300px)";
+*/
+
+.menu-responsive-wrapper-mobile {
+	background-color: blue;
+	display: none;
+}
+
+.menu-responsive {
+	background-color: green;
+	position: absolute;
+	transition: left 0.5s;
+	min-width: 60%;
+	max-width: 80%;
+	height: 100%;
+	top: 0px;
+	padding: 0px;
+	margin: 0px;
+	z-index: 102;
+	color: white;
+	overflow-y: scroll;
+	background-color: red;
+}
+.menu-responsive__background {
+	background-color: #00000070;
+	width: 100%;
+	height: 100%;
+	border: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 101;
+}
+.menu-responsive--open {
+	left: 0px;
+}
+.menu-responsive--close {
+	/* background-color: yellow; */
+	left: -100%;
+}
+
+@media only screen and (max-width: 700px) {
+	.menu-responsive-wrapper {
+		background-color: yellow;
+		display: none;
+	}
+
+	.menu-responsive-wrapper-mobile {
+		background-color: yellow;
+		display: block;
+	}
+}

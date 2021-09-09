@@ -170,7 +170,6 @@ function App() {
 
 	return (
 		<>
-			<div className="referen">x</div>
 			<MenuResponsiveTop menus={menuData}>
 				<ul>
 					<li>Primeiro</li>

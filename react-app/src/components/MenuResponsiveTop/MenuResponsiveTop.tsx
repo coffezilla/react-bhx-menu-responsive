@@ -16,25 +16,27 @@ let movePixelX = 0; // diff of the start and current position in X swip
 let movePixelY = 0; // diff of the start and current position in Y swip
 let isSwipingX = false; // check if is swipingX
 let isMobileMenuOpened = false; // check if is opened the mobile menu or not
-
-// opening menu
-// let clickOnTheCorner = false; // check if was a push from the corner
-// let menuHidePositionX = 0; // position pixel of the menu <ul>
+let isMobile = true; // variable to check width
 
 const MenuResponsiveTop = ({ menus, children }: IProps) => {
 	const [menuState, setMenuState] = useState(false);
 	const [swipping, setSwipping] = useState(false);
-
+	const [width, setWidth] = useState<number>(window.innerWidth); // check width size of the window
 	const refMenuResponsive = useRef<any>();
+
+	const handleWindowSizeChange = () => {
+		setWidth(window.innerWidth);
+		isMobile = window.innerWidth < 700 ? true : false;
+	};
 
 	const handleMenu = (newMenuState: boolean) => {
 		refMenuResponsive.current.scrollTop = 0;
 		setMenuState(newMenuState);
 		isMobileMenuOpened = newMenuState;
 		if (newMenuState) {
-			document.querySelector('body')?.classList.add('menu-responsive--body-block');
 			// listener back click browser
 			window.location.hash = 'responsive-menu';
+			document.querySelector('body')?.classList.add('menu-responsive--body-block');
 		} else {
 			document.querySelector('body')?.classList.remove('menu-responsive--body-block');
 			window.location.hash = '';
@@ -43,93 +45,80 @@ const MenuResponsiveTop = ({ menus, children }: IProps) => {
 
 	// swiping event
 	const swipe = (e: any) => {
-		// console.log('mmamia', refMenuResponsive.current.scrollTop);
-		// console.log('mmamia', refMenuResponsive.current.scrollHeight);
-		// check if has to scroll inner content to the bottom
-		if (
-			refMenuResponsive.current.scrollTop + window?.innerHeight >=
-			refMenuResponsive.current.scrollHeight
-		) {
-			const touch = e.targetTouches[0];
-			const diffMoveX = touch.screenX - swipeStartPosition.x;
-			const diffMoveY = touch.screenY - swipeStartPosition.y;
-			movePixelX = diffMoveX;
-			movePixelY = diffMoveY;
+		if (isMobile) {
+			if (
+				refMenuResponsive.current.scrollTop + window?.innerHeight >=
+				refMenuResponsive.current.scrollHeight
+			) {
+				const touch = e.targetTouches[0];
+				const diffMoveX = touch.screenX - swipeStartPosition.x;
+				const diffMoveY = touch.screenY - swipeStartPosition.y;
+				movePixelX = diffMoveX;
+				movePixelY = diffMoveY;
 
-			// block scroll inner content
-			if (movePixelY < 0) {
-				refMenuResponsive.current.style.overflow = 'hidden';
-			} else {
-				refMenuResponsive.current.style = '';
-			}
-			// console.log(movePixelY);
+				// block scroll inner content
+				if (movePixelY < 0) {
+					refMenuResponsive.current.style.overflow = 'hidden';
+				} else {
+					refMenuResponsive.current.style = '';
+				}
 
-			if (isMobileMenuOpened && e.target.id !== 'js-menu-responsive__background') {
-				console.log(movePixelX, movePixelY);
-				// push to close menu to the left
-				const movePixelYNotNegative = movePixelY > 0 ? 0 : movePixelY;
-				if ((movePixelX > -60 && movePixelX < 60 && movePixelYNotNegative < -30) || isSwipingX) {
-					refMenuResponsive.current.style.top = `${movePixelYNotNegative}px`;
-					if (!isSwipingX) {
-						isSwipingX = true;
-						document.querySelector('body')?.classList.add('menu-responsive--body-block');
+				if (isMobileMenuOpened && e.target.id !== 'js-menu-responsive__background') {
+					// push to close menu to the left
+					const movePixelYNotNegative = movePixelY > 0 ? 0 : movePixelY;
+					if ((movePixelX > -60 && movePixelX < 60 && movePixelYNotNegative < -30) || isSwipingX) {
+						refMenuResponsive.current.style.top = `${movePixelYNotNegative}px`;
+						if (!isSwipingX) {
+							isSwipingX = true;
+							document.querySelector('body')?.classList.add('menu-responsive--body-block');
+						}
 					}
 				}
 			}
 		}
-
-		// push to open menu from the left
-		// if (clickOnTheCorner) {
-		// 	if (movePixelY > -30 && movePixelY < 30 && diffMoveX > 30) {
-		// 		if (!isSwipingX) {
-		// 			isSwipingX = true;
-		// 			setSwipping(true);
-		// 			document.querySelector('body')?.classList.add('menu-responsive--body-block');
-		// 		}
-		// 		if (isSwipingX) {
-		// 			const menuMoveX = menuHidePositionX + diffMoveX;
-		// 			const movePixelXNotNegative = menuMoveX > 0 ? 0 : menuMoveX;
-		// 			refMenuResponsive.current.style.left = `${movePixelXNotNegative}px`;
-		// 		}
-		// 	}
-		// }
 	};
 
 	const swipeStart = (e: any) => {
-		if (isMobileMenuOpened && e.target.id !== 'js-menu-responsive__background') {
-			movePixelX = 0;
-			const touch = e.targetTouches[0];
-			swipeStartPosition = { x: touch.screenX, y: touch.screenY };
-			refMenuResponsive.current.style.transition = 'top 0s';
-			console.log('movendo start', swipeStartPosition);
+		if (isMobile) {
+			if (isMobileMenuOpened && e.target.id !== 'js-menu-responsive__background') {
+				movePixelX = 0;
+				const touch = e.targetTouches[0];
+				swipeStartPosition = { x: touch.screenX, y: touch.screenY };
+				refMenuResponsive.current.style.transition = 'top 0s';
+				console.log('movendo start', swipeStartPosition);
+			}
 		}
 	};
 	const swipeEnd = (e: any) => {
-		if (isMobileMenuOpened && e.target.id !== 'js-menu-responsive__background') {
-			if (movePixelX > -60 && movePixelX < 60) {
-				if (movePixelY < -40) {
-					handleMenu(false);
+		if (isMobile) {
+			if (isMobileMenuOpened && e.target.id !== 'js-menu-responsive__background') {
+				if (movePixelX > -60 && movePixelX < 60) {
+					if (movePixelY < -40) {
+						handleMenu(false);
+					}
 				}
 			}
+
+			refMenuResponsive.current.style = '';
+
+			if (!isMobileMenuOpened) {
+				document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+			}
+
+			setSwipping(false);
+			movePixelX = 0;
+			movePixelY = 0;
+			isSwipingX = false;
+			refMenuResponsive.current.style = '';
 		}
-
-		// if (!isMobileMenuOpened && movePixelX > 50 && clickOnTheCorner && isSwipingX) {
-		// 	handleMenu(true);
-		// }
-
-		refMenuResponsive.current.style = '';
-
-		if (!isMobileMenuOpened) {
-			document.querySelector('body')?.classList.remove('menu-responsive--body-block');
-		}
-
-		setSwipping(false);
-		movePixelX = 0;
-		movePixelY = 0;
-		// clickOnTheCorner = false;
-		isSwipingX = false;
-		refMenuResponsive.current.style = '';
 	};
+
+	useEffect(() => {
+		window.addEventListener('resize', handleWindowSizeChange);
+		return () => {
+			window.removeEventListener('resize', handleWindowSizeChange);
+		};
+	}, []);
 
 	//
 	useEffect(() => {
@@ -157,7 +146,7 @@ const MenuResponsiveTop = ({ menus, children }: IProps) => {
 	return (
 		<>
 			<div className="menu-responsive-wrapper-mobile">
-				{!menuState && (
+				{width < 700 && (
 					<button
 						type="button"
 						onClick={() => {
@@ -167,16 +156,27 @@ const MenuResponsiveTop = ({ menus, children }: IProps) => {
 						ABRIR
 					</button>
 				)}
-				<ul
-					ref={refMenuResponsive}
-					className={`menu-responsive ${
-						menuState ? 'menu-responsive--open' : 'menu-responsive--close'
-					}`}
-				>
-					{menus && menus.map((item) => <li key={item}>{item}</li>)}
-				</ul>
+
+				<div className="menu-responsive-container">
+					<div
+						ref={refMenuResponsive}
+						className={`menu-responsive ${
+							menuState ? 'menu-responsive--open' : 'menu-responsive--close'
+						}`}
+					>
+						<button
+							type="button"
+							onClick={() => {
+								handleMenu(false);
+							}}
+						>
+							FECHAR
+						</button>
+						<ul>{menus && menus.map((item) => <li key={item}>{item}</li>)}</ul>
+					</div>
+				</div>
 			</div>
-			{(menuState || swipping) && (
+			{(menuState || swipping) && width < 700 && (
 				<button
 					id="js-menu-responsive__background"
 					type="button"

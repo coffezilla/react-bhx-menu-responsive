@@ -8,20 +8,6 @@ $desktop-m:     "only screen and (min-width: 1129px) and (max-width: 1175px)";
 $desktop-xl:    "only screen and (min-width: 1176px) and (max-width: 1299px)";
 $desktop-xll:   "only screen and (min-width: 1300px)";
 */
-button {
-	width: 100%;
-}
-
-.referen {
-	width: 100px;
-	height: 100px;
-	display: block;
-	background-color: green;
-	position: absolute;
-	top: 150px;
-	left: 0px;
-	z-index: 999;
-}
 
 .menu-responsive-wrapper-mobile {
 	background-color: blue;
@@ -59,9 +45,7 @@ button {
 	left: 0px;
 }
 .menu-responsive--close {
-	/* background-color: yellow; */
 	left: -60%;
-	/* left: -130px; */
 }
 
 @media only screen and (max-width: 700px) {

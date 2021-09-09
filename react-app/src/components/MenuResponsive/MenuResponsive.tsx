@@ -42,7 +42,7 @@ const MenuResponsive = ({ menus, children }: IProps) => {
 			window.location.hash = 'responsive-menu';
 			document.querySelector('body')?.classList.add('menu-responsive--body-block');
 		} else {
-			document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+			// document.querySelector('body')?.classList.remove('menu-responsive--body-block');
 			window.location.hash = '';
 		}
 	};
@@ -122,7 +122,9 @@ const MenuResponsive = ({ menus, children }: IProps) => {
 			}
 
 			if (!isMobileMenuOpened) {
-				document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+				setTimeout(() => {
+					document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+				}, 500);
 			}
 
 			setSwipping(false);

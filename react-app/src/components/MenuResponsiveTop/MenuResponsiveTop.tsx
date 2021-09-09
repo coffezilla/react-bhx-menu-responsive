@@ -38,7 +38,9 @@ const MenuResponsiveTop = ({ menus, children }: IProps) => {
 			window.location.hash = 'responsive-menu';
 			document.querySelector('body')?.classList.add('menu-responsive--body-block');
 		} else {
-			document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+			// setTimeout(() => {
+			// 	document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+			// }, 500);
 			window.location.hash = '';
 		}
 	};
@@ -102,7 +104,9 @@ const MenuResponsiveTop = ({ menus, children }: IProps) => {
 			refMenuResponsive.current.style = '';
 
 			if (!isMobileMenuOpened) {
-				document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+				setTimeout(() => {
+					document.querySelector('body')?.classList.remove('menu-responsive--body-block');
+				}, 500);
 			}
 
 			setSwipping(false);

@@ -8,6 +8,20 @@ $desktop-m:     "only screen and (min-width: 1129px) and (max-width: 1175px)";
 $desktop-xl:    "only screen and (min-width: 1176px) and (max-width: 1299px)";
 $desktop-xll:   "only screen and (min-width: 1300px)";
 */
+button {
+	width: 100%;
+}
+
+.referen {
+	width: 100px;
+	height: 100px;
+	display: block;
+	background-color: green;
+	position: absolute;
+	top: 150px;
+	left: 0px;
+	z-index: 999;
+}
 
 .menu-responsive-wrapper-mobile {
 	background-color: blue;
@@ -16,8 +30,8 @@ $desktop-xll:   "only screen and (min-width: 1300px)";
 
 .menu-responsive {
 	background-color: green;
-	position: absolute;
-	transition: left 0.5s;
+	position: fixed;
+	transition: left 0.3s;
 	min-width: 60%;
 	max-width: 80%;
 	height: 100%;
@@ -30,7 +44,9 @@ $desktop-xll:   "only screen and (min-width: 1300px)";
 	background-color: red;
 }
 .menu-responsive__background {
-	background-color: #00000070;
+	background-color: #000;
+	transition: opacity 0.3s;
+	opacity: 0.3;
 	width: 100%;
 	height: 100%;
 	border: none;
@@ -44,7 +60,8 @@ $desktop-xll:   "only screen and (min-width: 1300px)";
 }
 .menu-responsive--close {
 	/* background-color: yellow; */
-	left: -100%;
+	left: -60%;
+	/* left: -130px; */
 }
 
 @media only screen and (max-width: 700px) {
@@ -57,4 +74,10 @@ $desktop-xll:   "only screen and (min-width: 1300px)";
 		background-color: yellow;
 		display: block;
 	}
+}
+
+/* HACK: block overflow from the body and block scroll */
+body.menu-responsive--body-block {
+	height: 100%;
+	overflow: hidden;
 }

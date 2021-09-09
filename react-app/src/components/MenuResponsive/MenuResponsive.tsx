@@ -2,7 +2,6 @@
 /* eslint-disable operator-linebreak */
 
 import { useState, useRef, useEffect } from 'react';
-
 import './MenuResponsive.css';
 
 interface IProps {
@@ -42,7 +41,6 @@ const MenuResponsive = ({ menus, children }: IProps) => {
 			window.location.hash = 'responsive-menu';
 			document.querySelector('body')?.classList.add('menu-responsive--body-block');
 		} else {
-			// document.querySelector('body')?.classList.remove('menu-responsive--body-block');
 			window.location.hash = '';
 		}
 	};

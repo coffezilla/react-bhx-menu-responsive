@@ -2,7 +2,6 @@
 /* eslint-disable operator-linebreak */
 
 import { useState, useRef, useEffect } from 'react';
-
 import './MenuResponsiveTop.css';
 
 interface IProps {
@@ -38,9 +37,6 @@ const MenuResponsiveTop = ({ menus, children }: IProps) => {
 			window.location.hash = 'responsive-menu';
 			document.querySelector('body')?.classList.add('menu-responsive--body-block');
 		} else {
-			// setTimeout(() => {
-			// 	document.querySelector('body')?.classList.remove('menu-responsive--body-block');
-			// }, 500);
 			window.location.hash = '';
 		}
 	};
